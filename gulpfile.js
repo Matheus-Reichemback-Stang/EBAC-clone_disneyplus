@@ -28,6 +28,12 @@ function scripts(){
 //         .pipe(gulp.dest('./dist/images'))
 // }
 
+// Apenas envia as imagens para a pasta Dist - Distribution
+function images(){
+    return gulp.src('./src/images/**/*')
+        .pipe(gulp.dest('./dist/images'))
+}
+
 // Minifica o CSS de saída e faz um Map
 function styles(){
     return gulp.src('./src/styles/main.scss')
@@ -46,9 +52,10 @@ function html(){
         .pipe(gulp.dest('./dist'))
 }
 
-exports.default = gulp.parallel(html, styles, scripts);
+exports.default = gulp.parallel(html, images, styles, scripts);
 exports.watch = function(){
     gulp.watch('./src/index.html', {ignoreInitial: false}, gulp.parallel(html))
+    gulp.watch('./src/images/**/*', {ignoreInitial: false}, gulp.parallel(images))
     gulp.watch('./src/styles/*.scss', {ignoreInitial: false}, gulp.parallel(styles))
     gulp.watch('./src/scripts/*.js', {ignoreInitial: false}, gulp.parallel(scripts))
 }
